@@ -136,4 +136,25 @@ try {
   }
   });
 
+  it ("Closing time of the pdas",async()=>{
+    const vault = anchor.web3.PublicKey.findProgramAddressSync(
+      [Buffer.from("tluav"), userWallet.publicKey.toBuffer()],
+      program.programId
+    )[0];
+
+    try {    
+
+    const signature = await program.methods.closePdas().accountsStrict({
+      vault: vault,
+      user: userWallet.publicKey,
+    systemProgram:SystemProgram.programId}).signers([userWallet]).rpc()
+
+    console.log("The Signature is", signature)
+  
+  } catch(e){
+    console.error(e);
+  }
+
+  })
+
 });
