@@ -87,12 +87,20 @@ describe("casino", () => {
 
     try {
 
+      const balance = await provider.connection.getBalance(userWallet.publicKey);
+      console.log("The Balance is", balance);
+
      const tx= await   program.methods.bet(new BN(2)).accountsStrict({
         user: user,
         vault: vault,
         vaultAccount: vault_Account_pda,
         systemProgram: SystemProgram.programId,
        }).signers([userWallet]).rpc()
+
+       const balance2 = await provider.connection.getBalance(userWallet.publicKey);
+       console.log("The Balance is", balance2);
+       const balance3 = await provider.connection.getBalance(vault_Account_pda);
+       console.log("The Balance of Pda vault is ", balance3);
     }  catch(e){
       console.error(e);
     }
@@ -119,6 +127,9 @@ try {
     ownerAccount: ow.publicKey,
 
    }).signers([userWallet]).rpc()
+
+   const balance = await provider.connection.getBalance(vault_Account_pda);
+   console.log("The Balance in pda is", balance);
 
   }  catch(e){
     console.error(e);

@@ -54,12 +54,17 @@ pub mod casino {
             msg!("You won the lottery");
             //let seed =ctx.accounts.user.key();
 
+            // let amount = ctx.accounts.vault_account.lamports();
+            // **ctx.accounts.user.to_account_info().try_borrow_mut_lamports()? += amount;
+            // **ctx.accounts.vault_account.to_account_info().try_borrow_mut_lamports()? -= amount;
+        
+
             let cpi_accounts =Transfer {
                 from: ctx.accounts.vault_account.to_account_info(),
                 to: ctx.accounts.user.to_account_info(),
             };
             let seed=ctx.accounts.user.key();
-            let vault_seed = &[b"vault", seed.as_ref(), &[ctx.bumps.vault]];
+            let vault_seed = &[b"vault", seed.as_ref(), &[ctx.bumps.vault_account]];
             let vault_signer = &[&vault_seed[..]];
 
 
@@ -77,12 +82,17 @@ pub mod casino {
         } else {
             msg!("You lost the lottery");
 
+            // let amount = ctx.accounts.vault_account.lamports();
+            // **ctx.accounts.owner_account.to_account_info().try_borrow_mut_lamports()? += 1*LAMPORTS_PER_SOL;
+            // **ctx.accounts.vault_account.to_account_info().try_borrow_mut_lamports()? -= 1*LAMPORTS_PER_SOL;
+
+
             let cpi_accounts =Transfer {
                 from: ctx.accounts.vault_account.to_account_info(),
                 to: ctx.accounts.owner_account.to_account_info(),
             };
             let seed=ctx.accounts.user.key();
-            let vault_seed = &[b"vault", seed.as_ref(), &[ctx.bumps.vault]];
+            let vault_seed = &[b"vault", seed.as_ref(), &[ctx.bumps.vault_account]];
             let vault_signer = &[&vault_seed[..]];
 
 
